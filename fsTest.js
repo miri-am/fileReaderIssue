@@ -7,16 +7,19 @@ if (Meteor.isClient) {
 
             var reader = new FileReader();
             reader.onloadend = function(evt) {
-                console.log("read success");
+                console.log("Called when the request has completed (either in success or failure)");
+                console.log(evt.target.result);
+            };
+
+            reader.onload = function(evt) {
+                console.log("Called when the read has successfully completed");
                 console.log(evt.target.result);
             };
 
             reader.onerror = function(err) {
-                console.log("error", err);
+                console.error("Called when the read has failed", err);
             }
-
-            //the following works fine on iOS but not on Android
-            reader.readAsDataURL(blob);
+            reader.readAsDataURL(blob); //works fine on iOS but not on Android
         }
     });
 }
